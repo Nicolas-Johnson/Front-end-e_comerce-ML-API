@@ -19,7 +19,7 @@ class Content extends React.Component {
   }
 
   fetchData = () => {
-    this.setState({ loading: true, data: [], }, () =>{
+    this.setState({ loading: true, data: [], notFound: false, }, () =>{
       const { query } = this.state;
       fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`)
         .then((response) => response.json())
