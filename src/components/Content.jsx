@@ -18,6 +18,22 @@ class Content extends React.Component {
     this.setState({ [name]: value });
   }
 
+  getItemsByCategory = (id) => {
+    this.setState({ loading: true, data: [], notFound: false, }, () =>{
+      fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${id}`)
+        .then(response => response.json())
+        .then(response => {
+          this.setState({
+            data: response.results,
+            loading: false,
+            notFound: false,
+          })
+        }).catch((error) => {
+          console.log(error);
+        });
+    })
+  }
+
   fetchData = () => {
     this.setState({ loading: true, data: [], notFound: false, }, () =>{
       const { query } = this.state;
@@ -42,7 +58,7 @@ class Content extends React.Component {
     const { query, data, loading, notFound } = this.state;
     return (
       <div>
-       <Header query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } />
+       <Header query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
        <ItemsList data={ data } />
        {loading && <>Loading...</>}
        {notFound && <>Desculpa, sua pesquisa não retornou nada.</>}
