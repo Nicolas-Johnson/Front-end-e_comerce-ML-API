@@ -1,8 +1,16 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import Content from '../src/components/Content';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('Testa o App', () => {
+  const myApp = render(<App />);
+  const texto = myApp.getByText(/my app/);
+  //const content = myApp.getByRole('Route');
+
+  expect(texto).toBeInTheDocument();
+  //expect (content).toBeInTheDocument();
+
+
+  
 });
