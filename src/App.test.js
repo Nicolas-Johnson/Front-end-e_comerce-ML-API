@@ -4,8 +4,8 @@ import App from './App';
 import Content from '../src/components/Content';
 
 test('Testa o App', () => {
-  const myApp = render(<App />);
-  const texto = myApp.getByText(/my app/);
+  const { getByText } = render(<App />);
+  const texto = App.getByText(/my app/);
   //const content = myApp.getByRole('Route');
 
   expect(texto).toBeInTheDocument();
