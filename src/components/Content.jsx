@@ -7,7 +7,8 @@ class Content extends React.Component {
   constructor() {
     super();
     this.state = {
-      query: '',
+      query: 'Ofertas do Dia',
+      category: '',
       data: [],
       loading: false,
       notFound: false,
@@ -18,8 +19,8 @@ class Content extends React.Component {
     this.setState({ [name]: value });
   }
 
-  getItemsByCategory = (id) => {
-    this.setState({ loading: true, data: [], notFound: false, }, () =>{
+  getItemsByCategory = (id, value) => {
+    this.setState({ loading: true, data: [], notFound: false, category: value }, () =>{
       fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${id}`)
         .then(response => response.json())
         .then(response => {
@@ -36,8 +37,8 @@ class Content extends React.Component {
 
   fetchData = () => {
     this.setState({ loading: true, data: [], notFound: false, }, () =>{
-      const { query } = this.state;
-      fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`)
+      const { query, category } = this.state;
+      fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${category}&q=${query}`)
         .then((response) => response.json())
         .then((response) => {
           if(response.results.length === 0){
@@ -54,6 +55,10 @@ class Content extends React.Component {
     })
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
   render() {
     const { query, data, loading, notFound } = this.state;
     return (
@@ -61,7 +66,7 @@ class Content extends React.Component {
        <Header query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
        <ItemsList data={ data } />
        {loading && <>Loading...</>}
-       {notFound && <>Desculpa, sua pesquisa não retornou nada.</>}
+       {notFound && <h1>Desculpa, sua pesquisa não retornou nada.</h1>}
       </div>
     );
   }
