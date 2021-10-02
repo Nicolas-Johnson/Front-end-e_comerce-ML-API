@@ -12,6 +12,7 @@ class Content extends React.Component {
       data: [],
       loading: false,
       notFound: false,
+      ShoppingCart: [],
     }
   }
 
@@ -55,6 +56,15 @@ class Content extends React.Component {
     })
   }
 
+  handleChangeOnShoppingCart = (data, amount) => {
+    const itemObj = {
+      data,
+      amount,
+    }
+    console.log(itemObj)
+    this.setState(({ShoppingCart}) => ({ShoppingCart: ([...ShoppingCart, itemObj])}));
+  }
+
   componentDidMount() {
     this.fetchData();
   }
@@ -64,7 +74,7 @@ class Content extends React.Component {
     return (
       <div>
        <Header query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
-       <ItemsList data={ data } />
+       <ItemsList data={ data } handleChangeOnShoppingCart={ this.handleChangeOnShoppingCart }/>
        {loading && <>Loading...</>}
        {notFound && <h1>Desculpa, sua pesquisa não retornou nada.</h1>}
       </div>

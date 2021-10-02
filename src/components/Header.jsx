@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
   constructor() {
@@ -45,11 +45,10 @@ class Header extends React.Component {
            {categories.map(({ name, id }) => <option key={ id } id={ id }>{ name }</option>)}
          </select>
        </label>
+       <button type="button"><Link to="/shopping-cart">Shopping Cart</Link></button>
       </div>
     );
   }
 }
 
 export default Header;
-//https://api.mercadolibre.com/sites/MLA/categories
-//onClick={ (event) => this.callCategorie(event)
