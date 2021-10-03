@@ -56,24 +56,28 @@ class Content extends React.Component {
     })
   }
 
-  handleChangeOnShoppingCart = (data, amount) => {
-    const itemObj = {
-      data,
-      amount,
-    }
-    console.log(itemObj)
-    this.setState(({ShoppingCart}) => ({ShoppingCart: ([...ShoppingCart, itemObj])}));
+  handleChangeOnShoppingCart = (item) => {
+    //console.log('item:', item);
+    //setTimeout(() => {this.item.push(item)}, 2000);
+  }
+
+  addItem = (item) => {
+    this.setState((prevState) => ({ShoppingCart: [...prevState.ShoppingCart, item]}));
   }
 
   componentDidMount() {
     this.fetchData();
+    setTimeout(() => {console.log('monted:', this.item)}, 3000);
+    //if(this.item.length >=1){
+      //this.addItem(this.item);
+    //};
   }
 
   render() {
-    const { query, data, loading, notFound } = this.state;
+    const { query, data, loading, notFound, ShoppingCart } = this.state;
     return (
       <div>
-       <Header query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
+       <Header shoppingCart={ ShoppingCart } query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
        <ItemsList data={ data } handleChangeOnShoppingCart={ this.handleChangeOnShoppingCart }/>
        {loading && <>Loading...</>}
        {notFound && <h1>Desculpa, sua pesquisa não retornou nada.</h1>}

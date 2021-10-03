@@ -45,7 +45,7 @@ class Header extends React.Component {
            {categories.map(({ name, id }) => <option key={ id } id={ id }>{ name }</option>)}
          </select>
        </label>
-       <button type="button"><Link to="/shopping-cart">Shopping Cart</Link></button>
+       <button type="button"><Link to={ {pathname: "/shopping-cart"} }>Shopping Cart</Link></button>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 class About extends React.Component {
@@ -9,21 +10,24 @@ class About extends React.Component {
       loading: false,
       notFound: false,
       picIndex: 0,
-      amount: 0,
+      amount: 1,
     }
   }
 
   handleCartAdd = () => {
     const { location: { handleChangeOnShoppingCart } } = this.props;
     const { data, amount } = this.state;
+    const amountInNumber = parseInt(amount);
     const objcItem = {
       id: data.id,
       title: data.title,
       thumb: data.thumbnail,
       price: data.price,
+      amount: amountInNumber,
+    };
+    if(objcItem){
+      handleChangeOnShoppingCart(objcItem);      
     }
-    const amountInNumber = parseInt(amount);
-    handleChangeOnShoppingCart(objcItem, amountInNumber)
   }
 
   handleAmount = ({ target: { value } }) => {this.setState({amount: value})}
@@ -72,6 +76,7 @@ class About extends React.Component {
     return(
       <>
         <h2>About Item</h2>
+        <Link to='/'>Home</Link>
         {loading && <div>Loading...</div>}
         {data
           && 
