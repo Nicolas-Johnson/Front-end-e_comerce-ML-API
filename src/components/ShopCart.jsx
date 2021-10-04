@@ -4,20 +4,7 @@ class ShopCart extends React.Component {
   constructor() {
     super();
     this.state = {
-        CartItems: [{
-          amount: 2,
-          id: "MLB1700794361",
-          price: 52.95,
-          thumb: "http://http2.mlstatic.com/D_913699-MLB45114024383_032021-I.jpg",
-          title: "Tênis Sapatênis Confortável Oferta Sapato Leve Promoção",
-        },
-        {
-          amount: 1,
-          id: "MLB1700794362",
-          price: 52.95,
-          thumb: "http://http2.mlstatic.com/D_913699-MLB45114024383_032021-I.jpg",
-          title: "Tênis Sapatênis Confortável Oferta Sapato Leve Promoção",
-        }],
+        CartItems: [],
         loading: false,
     }
   }
@@ -40,6 +27,7 @@ class ShopCart extends React.Component {
         }
     }
   }
+
   handleRemoveItem = (index) => {
     const { CartItems } = this.state;
     const Items = Object.assign([], CartItems);
@@ -58,7 +46,8 @@ class ShopCart extends React.Component {
   }
 
   componentDidMount() {
-    this.getTotalPrice();
+    const { shoppingCart } = this.props;
+    this.setState({CartItems: [...shoppingCart]}, () => this.getTotalPrice());
   }
 
   render() {
@@ -92,4 +81,3 @@ class ShopCart extends React.Component {
 }
 
 export default ShopCart;
-

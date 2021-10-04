@@ -12,8 +12,7 @@ class Header extends React.Component {
   callCategorie = ({ target }) => {
     const categorie = target.value;
     const options = [...target];
-    const find = options.find((option) => option.value === categorie);
-    
+    const find = options.find((option) => option.value === categorie);    
     const { getItemsByCategory } = this.props;
     getItemsByCategory(find.id, find.value);
 

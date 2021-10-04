@@ -18,16 +18,14 @@ class About extends React.Component {
     const { location: { handleChangeOnShoppingCart } } = this.props;
     const { data, amount } = this.state;
     const amountInNumber = parseInt(amount);
-    const objcItem = {
-      id: data.id,
-      title: data.title,
-      thumb: data.thumbnail,
-      price: data.price,
+    const objcItem = [{
       amount: amountInNumber,
-    };
-    if(objcItem){
-      handleChangeOnShoppingCart(objcItem);      
-    }
+      id: data.id,
+      price: data.price,
+      thumb: data.thumbnail,
+      title: data.title,
+    }];
+    handleChangeOnShoppingCart(objcItem);
   }
 
   handleAmount = ({ target: { value } }) => {this.setState({amount: value})}

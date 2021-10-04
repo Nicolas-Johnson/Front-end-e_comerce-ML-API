@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import ItemsList from './ItemsList';
 
-
 class Content extends React.Component {
   constructor() {
     super();
@@ -56,29 +55,17 @@ class Content extends React.Component {
     })
   }
 
-  handleChangeOnShoppingCart = (item) => {
-    //console.log('item:', item);
-    //setTimeout(() => {this.item.push(item)}, 2000);
-  }
-
-  addItem = (item) => {
-    this.setState((prevState) => ({ShoppingCart: [...prevState.ShoppingCart, item]}));
-  }
-
   componentDidMount() {
     this.fetchData();
-    setTimeout(() => {console.log('monted:', this.item)}, 3000);
-    //if(this.item.length >=1){
-      //this.addItem(this.item);
-    //};
   }
 
   render() {
     const { query, data, loading, notFound, ShoppingCart } = this.state;
+    const { handleChangeOnShoppingCart } = this.props;
     return (
       <div>
        <Header shoppingCart={ ShoppingCart } query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
-       <ItemsList data={ data } handleChangeOnShoppingCart={ this.handleChangeOnShoppingCart }/>
+       <ItemsList data={ data } handleChangeOnShoppingCart={ handleChangeOnShoppingCart }/>
        {loading && <>Loading...</>}
        {notFound && <h1>Desculpa, sua pesquisa não retornou nada.</h1>}
       </div>
