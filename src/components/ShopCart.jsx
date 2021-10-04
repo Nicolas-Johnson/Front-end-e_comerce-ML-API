@@ -21,19 +21,28 @@ class ShopCart extends React.Component {
         loading: false,
     }
   }
-  handleQuantidade = (expression, id, index) => {
-    //const { CartItems } = this.state;
-    //console.log(index);
-    //const finde = CartItems.find((item) => item.id === id);
+  handleQuantidade = (expression, amount, index, lengthCart) => {
     if(expression === 'add') {
-      return this.setState((prevState) => {
-        const { CartItems } = prevState;
-        const { amount } = CartItems[index];
-        const soma = amount + 1;
-        return CartItems;
-      })
-    }      
+      const { CartItems } = this.state;
+      const Items = Object.assign([], CartItems);
+      Items[index].amount = amount + 1;
+      this.setState({ CartItems: [...Items] });
+      this.getTotalPrice();
+    } else if(expression === 'sub') {
+        if(amount > 1) {
+          const { CartItems } = this.state;
+          const Items = Object.assign([], CartItems);
+          Items[index].amount = amount - 1;
+          this.setState({ CartItems: [...Items] });
+          this.getTotalPrice();
+        }
+    }
   }
+  //handleQuantidade = (expression, id, index, amount) => {
+    //if(expression === 'add') {
+    //  return console.log((amount + 1));
+    //} return console.log((amount - 1));
+  //}
 
   getTotalPrice = () => {
     const { CartItems } = this.state;
@@ -41,23 +50,9 @@ class ShopCart extends React.Component {
     const prices = CartItems.map((item) => item.price * item.amount).reduce((acc, curr) => (acc + curr), 0);
     const floatFixed = parseFloat(prices.toFixed(2));
     this.setState({totalPrice: floatFixed, totalAmount: amount})
-    //const totalPrice = CartItems.reduce((acc, curr) => (acc.price + curr.price), 0);
-    //console.log(prices, amount);
   }
 
-  AddToCard = (data, amount) => {
-    const objcItem = {
-      data,
-      amount,
-    };
-
-    this.setState((prevState) => {
-        return {CartItems: [...prevState.CartItems, objcItem]}
-    });
-  }
   componentDidMount() {
-    //const { shoppingCart } = this.props;
-    //console.log(shoppingCart);
     this.getTotalPrice();
   }
 
@@ -75,10 +70,10 @@ class ShopCart extends React.Component {
                   <h3>{ title }</h3>
                   <div>
                     <h4>quantidade:</h4>
-                    <button type="button" onClick={ () => this.handleQuantidade('sub', id, index) }>-</button>
+                    <button type="button" onClick={ () => this.handleQuantidade('sub', amount, index, (CartItems[-1] - 1)) }>-</button>
                     { amount }
-                    <button type="button" onClick={ () => this.handleQuantidade('add', id, index) }>+</button>
-                    <h4>Valor: { price }</h4>
+                    <button type="button" onClick={ () => this.handleQuantidade('add', amount, index) }>+</button>
+                    <h4>Valor: { parseFloat((price * amount).toFixed(2)) }</h4>
                   </div>
                 </div>
               ))}
@@ -92,6 +87,3 @@ class ShopCart extends React.Component {
 
 export default ShopCart;
 
-
-//return this.setState(({ CartItems }) => (CartItems: ((CartItems[index].amount) + 1)));
-//    } this.setState(({ CartItems }) => (CartItems: ((CartItems[index].amount) - 1)));
