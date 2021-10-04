@@ -26,23 +26,28 @@ class ShopCart extends React.Component {
       const { CartItems } = this.state;
       const Items = Object.assign([], CartItems);
       Items[index].amount = amount + 1;
-      this.setState({ CartItems: [...Items] });
-      this.getTotalPrice();
+      this.setState({ CartItems: [...Items] }, () => {
+        this.getTotalPrice();
+      });
     } else if(expression === 'sub') {
         if(amount > 1) {
           const { CartItems } = this.state;
           const Items = Object.assign([], CartItems);
           Items[index].amount = amount - 1;
-          this.setState({ CartItems: [...Items] });
-          this.getTotalPrice();
+          this.setState({ CartItems: [...Items] }, () => {
+            this.getTotalPrice();
+          });
         }
     }
   }
-  //handleQuantidade = (expression, id, index, amount) => {
-    //if(expression === 'add') {
-    //  return console.log((amount + 1));
-    //} return console.log((amount - 1));
-  //}
+  handleRemoveItem = (index) => {
+    const { CartItems } = this.state;
+    const Items = Object.assign([], CartItems);
+    Items.splice(index, 1);
+    this.setState({CartItems: [...Items]}, () => {
+      this.getTotalPrice();
+    });
+  }
 
   getTotalPrice = () => {
     const { CartItems } = this.state;
@@ -74,6 +79,7 @@ class ShopCart extends React.Component {
                     { amount }
                     <button type="button" onClick={ () => this.handleQuantidade('add', amount, index) }>+</button>
                     <h4>Valor: { parseFloat((price * amount).toFixed(2)) }</h4>
+                    <button type="button" onClick={() => this.handleRemoveItem(index)}> X </button>
                   </div>
                 </div>
               ))}
