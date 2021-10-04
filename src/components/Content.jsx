@@ -60,11 +60,11 @@ class Content extends React.Component {
   }
 
   render() {
-    const { query, data, loading, notFound, ShoppingCart } = this.state;
+    const { query, data, loading, notFound } = this.state;
     const { handleChangeOnShoppingCart } = this.props;
     return (
       <div>
-       <Header shoppingCart={ ShoppingCart } query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
+       <Header query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
        <ItemsList data={ data } handleChangeOnShoppingCart={ handleChangeOnShoppingCart }/>
        {loading && <>Loading...</>}
        {notFound && <h1>Desculpa, sua pesquisa não retornou nada.</h1>}

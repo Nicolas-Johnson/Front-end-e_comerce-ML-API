@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class ShopCart extends React.Component {
   constructor() {
@@ -55,9 +56,12 @@ class ShopCart extends React.Component {
     return (
       <div>
           <h1>Shopping Cart</h1>
+          <Link to='/'>Home</Link>
           {loading && <h2>Loading...</h2>}
           <div>
               <h2>Items</h2>
+              <h2>quantidade: { totalAmount }</h2>
+              <h2>Total: { totalPrice }</h2>
               {CartItems.map(({ id, thumb, amount, title, price }, index) => (
                 <div key={ id }>
                   <img src={ thumb } alt={ title } width='100' />
@@ -73,8 +77,6 @@ class ShopCart extends React.Component {
                 </div>
               ))}
           </div>
-          <h2>quantidade: { totalAmount }</h2>
-          <h2>Total: { totalPrice }</h2>
       </div>
     );
   }
