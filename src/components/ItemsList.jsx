@@ -1,21 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import CardItems from './CardItems';
 
 class ItemsList extends React.Component {
   render() {
-    const { data } = this.props;
+    const { data, handleChangeOnShoppingCart } = this.props;
     return(
       <>
         <h3>ITEMS LIST</h3>        
         {data.map(({ title, id, thumbnail, price }) =>
-          <Link key={ id } to={`/about/${id}`}>
             <CardItems
+              key={ id }
+              id={ id }
               price={ price }
               thumbnail={ thumbnail }
               title={ title }
-            />
-          </Link>
+              handleChangeOnShoppingCart={ handleChangeOnShoppingCart }
+            />          
         )}
       </>
     );

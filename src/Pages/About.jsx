@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 class About extends React.Component {
   constructor() {
@@ -8,8 +10,25 @@ class About extends React.Component {
       loading: false,
       notFound: false,
       picIndex: 0,
+      amount: 1,
     }
   }
+
+  handleCartAdd = () => {
+    const { location: { handleChangeOnShoppingCart } } = this.props;
+    const { data, amount } = this.state;
+    const amountInNumber = parseInt(amount);
+    const objcItem = [{
+      amount: amountInNumber,
+      id: data.id,
+      price: data.price,
+      thumb: data.thumbnail,
+      title: data.title,
+    }];
+    handleChangeOnShoppingCart(objcItem);
+  }
+
+  handleAmount = ({ target: { value } }) => {this.setState({amount: value})}
 
   handlePicChange = (value) => {
     const { picIndex, data: { pictures } } = this.state;
@@ -24,7 +43,7 @@ class About extends React.Component {
     if(picIndex === 0) {
       return ' '
     }
-    this.setState((prevState, _props) => ({
+    this.setState((prevState) => ({
       picIndex: prevState.picIndex - 1
     }))
   }
@@ -42,8 +61,7 @@ class About extends React.Component {
             data: response[0].body,
             loading: false,
           })
-          console.log(response[0].body)}
-        );
+        });
     });
   }
 
@@ -53,12 +71,12 @@ class About extends React.Component {
 
   render() {
     const { loading, notFound, data, picIndex } = this.state;
-    console.log(data);
     return(
       <>
         <h2>About Item</h2>
+        <Link to='/'>Home</Link>
         {loading && <div>Loading...</div>}
-        {data 
+        {data
           && 
             <div>
               <button onClick={ () => this.handlePicChange('previous') } type="button">{'<'}</button>
@@ -66,6 +84,10 @@ class About extends React.Component {
               <button onClick={ () => this.handlePicChange('next') } type="button">{'>'}</button>
               <h3>{ data.title }</h3>
               <h4>R${ data.price }</h4>
+              <div>
+                <input type='number' min={1} max={100} onChange={ this.handleAmount } />
+                <button type='button'onClick={ this.handleCartAdd }>Add to Cart</button>
+              </div>
             </div>}
         {notFound && <div>Item not Found</div>}
       </>

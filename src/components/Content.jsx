@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import ItemsList from './ItemsList';
 
-
 class Content extends React.Component {
   constructor() {
     super();
@@ -12,6 +11,7 @@ class Content extends React.Component {
       data: [],
       loading: false,
       notFound: false,
+      ShoppingCart: [],
     }
   }
 
@@ -61,10 +61,11 @@ class Content extends React.Component {
 
   render() {
     const { query, data, loading, notFound } = this.state;
+    const { handleChangeOnShoppingCart } = this.props;
     return (
       <div>
        <Header query={ query } handleChange={ this.handleChange } fetchData={ this.fetchData } getItemsByCategory={ this.getItemsByCategory } />
-       <ItemsList data={ data } />
+       <ItemsList data={ data } handleChangeOnShoppingCart={ handleChangeOnShoppingCart }/>
        {loading && <>Loading...</>}
        {notFound && <h1>Desculpa, sua pesquisa não retornou nada.</h1>}
       </div>
